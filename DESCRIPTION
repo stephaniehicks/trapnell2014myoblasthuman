@@ -1,0 +1,20 @@
+Package: trapnell2014myoblasthuman
+Title: Trapnell et al (2014) Human Myoblast Data
+Version: 0.0.1
+Authors: Will Townes and Stephanie Hicks
+Maintainer: Stephanie C. Hicks <stephaniechicks@gmail.com>
+Description: This package contains a Bioconductor 
+    ExpressionSet from Trapnell et al. (2014) paper 
+    that performed a time-series experiment of bulk and 
+    single cell RNA-Seq at four time points in 
+    differentiated primary human myoblasts. 
+    Metadata and pre-processed data (FPKM) were downloaded
+    from Gene Expression Omnibus (GSE52529). 
+    Batch information was extracted from headers 
+    of FASTQ files downloaded from Sequence Read Archive. 
+Depends: R (>= 3.3.3)
+License: GPL (>=3)
+Encoding: UTF-8
+LazyData: TRUE
+Author: Stephanie C. Hicks
+RoxygenNote: 6.0.1

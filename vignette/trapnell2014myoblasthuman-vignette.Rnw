@@ -1,0 +1,74 @@
+%\VignetteIndexEntry{The bodymapRat data user's guide}
+%\VignettePackage{bodymapRat}
+%\VignetteEngine{knitr::knitr}
+\documentclass{article}
+
+<<style-knitr, eval=TRUE, echo=FALSE, results="asis">>=
+    BiocStyle::latex()
+@
+
+\setlength{\parskip}{1\baselineskip}
+\setlength{\parindent}{0pt}
+
+\title{The \texttt{trapnell2014myoblasthuman} data user's guide}
+\author{Will Townes (\texttt{will.townes@gmail.com}) \and 
+Stephanie C. Hicks (\texttt{shicks@jimmy.harvard.edu}) }
+
+\date{Modified: March 17, 2017.  Compiled: \today}
+
+
+\begin{document}
+
+\maketitle
+
+\section{Overview}
+
+The \texttt{trapnell2014myoblasthuman} package contains 
+gene expression data from the Trapnell et al. (2014) paper
+that performed a time-series experiment of bulk 
+(three bulk samples per time point) and 
+single cell RNA-Seq at four time points (hour 0, 24, 48, 72) in 
+differentiated primary human myoblasts (\href{http://www.ncbi.nlm.nih.gov/pubmed/24658644}{PMID: 24658644}). 
+Metadata and pre-processed data (FPKM) were downloaded
+from Gene Expression Omnibus (\href{http://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE52529}{GSE52529}). 
+Batch information was extracted from headers 
+of FASTQ files downloaded from Sequence Read Archive. 
+The data is provided as an \texttt{ExpressionSet}.
+
+The data can be accessed as follows:
+<<loadlibs, message=FALSE, warning=FALSE>>=
+library(Biobase)
+library(trapnell2014myoblasthuman)
+@
+
+<<loaddata>>=
+data(trapnell2014myoblasthuman)
+
+# Get the expression data
+eset = exprs(trapnell2014myoblasthuman)
+eset[1:5, 1:5]
+dim(eset)
+
+# Get the pheno data
+pd = pData(trapnell2014myoblasthuman)
+head(pd)
+@
+
+The data consists of bulk and single-cell RNA-Seq (SC) at four time points. 
+<<description>>=
+table(pd$sampleType, pd$hour)
+@
+
+
+\section{References}
+
+\begin{enumerate}
+
+\item Trapnell et al. (2014). The dynamics and regulators
+of cell fate decisions are revealed by pseudotemporal ordering of single cells
+\textit{Nature Biotechnology} \textbf{32} (4): 381 - 386.
+\href{http://www.ncbi.nlm.nih.gov/pubmed/24658644}{PMID: 24658644}. PMCID: PMC4122333.
+
+\end{enumerate}
+
+\end{document}

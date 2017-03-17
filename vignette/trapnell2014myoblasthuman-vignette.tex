@@ -1,0 +1,179 @@
+%\VignetteIndexEntry{The bodymapRat data user's guide}
+%\VignettePackage{bodymapRat}
+%\VignetteEngine{knitr::knitr}
+\documentclass{article}\usepackage[]{graphicx}\usepackage[usenames,dvipsnames]{color}
+%% maxwidth is the original width if it is less than linewidth
+%% otherwise use linewidth (to make sure the graphics do not exceed the margin)
+\makeatletter
+\def\maxwidth{ %
+  \ifdim\Gin@nat@width>\linewidth
+    \linewidth
+  \else
+    \Gin@nat@width
+  \fi
+}
+\makeatother
+
+\definecolor{fgcolor}{rgb}{0.345, 0.345, 0.345}
+\newcommand{\hlnum}[1]{\textcolor[rgb]{0.686,0.059,0.569}{#1}}%
+\newcommand{\hlstr}[1]{\textcolor[rgb]{0.192,0.494,0.8}{#1}}%
+\newcommand{\hlcom}[1]{\textcolor[rgb]{0.678,0.584,0.686}{\textit{#1}}}%
+\newcommand{\hlopt}[1]{\textcolor[rgb]{0,0,0}{#1}}%
+\newcommand{\hlstd}[1]{\textcolor[rgb]{0.345,0.345,0.345}{#1}}%
+\newcommand{\hlkwa}[1]{\textcolor[rgb]{0.161,0.373,0.58}{\textbf{#1}}}%
+\newcommand{\hlkwb}[1]{\textcolor[rgb]{0.69,0.353,0.396}{#1}}%
+\newcommand{\hlkwc}[1]{\textcolor[rgb]{0.333,0.667,0.333}{#1}}%
+\newcommand{\hlkwd}[1]{\textcolor[rgb]{0.737,0.353,0.396}{\textbf{#1}}}%
+\let\hlipl\hlkwb
+
+\usepackage{framed}
+\makeatletter
+\newenvironment{kframe}{%
+ \def\at@end@of@kframe{}%
+ \ifinner\ifhmode%
+  \def\at@end@of@kframe{\end{minipage}}%
+  \begin{minipage}{\columnwidth}%
+ \fi\fi%
+ \def\FrameCommand##1{\hskip\@totalleftmargin \hskip-\fboxsep
+ \colorbox{shadecolor}{##1}\hskip-\fboxsep
+     % There is no \\@totalrightmargin, so:
+     \hskip-\linewidth \hskip-\@totalleftmargin \hskip\columnwidth}%
+ \MakeFramed {\advance\hsize-\width
+   \@totalleftmargin\z@ \linewidth\hsize
+   \@setminipage}}%
+ {\par\unskip\endMakeFramed%
+ \at@end@of@kframe}
+\makeatother
+
+\definecolor{shadecolor}{rgb}{.97, .97, .97}
+\definecolor{messagecolor}{rgb}{0, 0, 0}
+\definecolor{warningcolor}{rgb}{1, 0, 1}
+\definecolor{errorcolor}{rgb}{1, 0, 0}
+\newenvironment{knitrout}{}{} % an empty environment to be redefined in TeX
+
+\usepackage{alltt}
+
+\RequirePackage{/Library/Frameworks/R.framework/Versions/3.3/Resources/library/BiocStyle/resources/tex/Bioconductor}
+
+\AtBeginDocument{\bibliographystyle{/Library/Frameworks/R.framework/Versions/3.3/Resources/library/BiocStyle/resources/tex/unsrturl}}
+
+
+\setlength{\parskip}{1\baselineskip}
+\setlength{\parindent}{0pt}
+
+\title{The \texttt{trapnell2014myoblasthuman} data user's guide}
+\author{Will Townes (\texttt{will.townes@gmail.com}) \and 
+Stephanie C. Hicks (\texttt{shicks@jimmy.harvard.edu}) }
+
+\date{Modified: March 17, 2017.  Compiled: \today}
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\begin{document}
+
+\maketitle
+
+\section{Overview}
+
+The \texttt{trapnell2014myoblasthuman} package contains 
+gene expression data from the Trapnell et al. (2014) paper
+that performed a time-series experiment of bulk 
+(three bulk samples per time point) and 
+single cell RNA-Seq at four time points (hour 0, 24, 48, 72) in 
+differentiated primary human myoblasts (\href{http://www.ncbi.nlm.nih.gov/pubmed/24658644}{PMID: 24658644}). 
+Metadata and pre-processed data (FPKM) were downloaded
+from Gene Expression Omnibus (\href{http://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE52529}{GSE52529}). 
+Batch information was extracted from headers 
+of FASTQ files downloaded from Sequence Read Archive. 
+The data is provided as an \texttt{ExpressionSet}.
+
+The data can be accessed as follows:
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{library}\hlstd{(Biobase)}
+\hlkwd{library}\hlstd{(trapnell2014myoblasthuman)}
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{data}\hlstd{(trapnell2014myoblasthuman)}
+
+\hlcom{# Get the expression data}
+\hlstd{eset} \hlkwb{=} \hlkwd{exprs}\hlstd{(trapnell2014myoblasthuman)}
+\hlstd{eset[}\hlnum{1}\hlopt{:}\hlnum{5}\hlstd{,} \hlnum{1}\hlopt{:}\hlnum{5}\hlstd{]}
+\end{alltt}
+\begin{verbatim}
+##                    SRR1032910 SRR1032911 SRR1032912 SRR1032913 SRR1032914
+## ENSG00000000003.10  21.984400   7.116630   1.280040    19.6021   43.46180
+## ENSG00000000005.5    0.000000   0.000000   0.000000     0.0000    0.00000
+## ENSG00000000419.8   40.059700  55.460400  77.580800    77.3450    6.49656
+## ENSG00000000457.8    0.937081   0.637528   0.729195    12.4075    0.00000
+## ENSG00000000460.12   0.740922   1.405490  57.578500    11.7516    3.93587
+\end{verbatim}
+\begin{alltt}
+\hlkwd{dim}\hlstd{(eset)}
+\end{alltt}
+\begin{verbatim}
+## [1] 47192   384
+\end{verbatim}
+\begin{alltt}
+\hlcom{# Get the pheno data}
+\hlstd{pd} \hlkwb{=} \hlkwd{pData}\hlstd{(trapnell2014myoblasthuman)}
+\hlkwd{head}\hlstd{(pd)}
+\end{alltt}
+\begin{verbatim}
+##                   Run geo_accession       source_name_ch1 description               Model
+## SRR1032910 SRR1032910    GSM1268960 Myoblast_Cell T0_CT_A   T0_CT_A01 Illumina HiSeq 2500
+## SRR1032911 SRR1032911    GSM1268961 Myoblast_Cell T0_CT_A   T0_CT_A02 Illumina HiSeq 2500
+## SRR1032912 SRR1032912    GSM1268962 Myoblast_Cell T0_CT_A   T0_CT_A03 Illumina HiSeq 2500
+## SRR1032913 SRR1032913    GSM1268963 Myoblast_Cell T0_CT_A   T0_CT_A04 Illumina HiSeq 2500
+## SRR1032914 SRR1032914    GSM1268964 Myoblast_Cell T0_CT_A   T0_CT_A05 Illumina HiSeq 2500
+## SRR1032915 SRR1032915    GSM1268965 Myoblast_Cell T0_CT_A   T0_CT_A06 Illumina HiSeq 2500
+##            instrument runID      fcID fcLane  hour sampleType             control
+## SRR1032910 HWI-ST1233   229 H0L2PADXX      1 hour0         SC control well: FALSE
+## SRR1032911 HWI-ST1233   229 H0L2PADXX      1 hour0         SC control well: FALSE
+## SRR1032912 HWI-ST1233   229 H0L2PADXX      1 hour0         SC control well: FALSE
+## SRR1032913 HWI-ST1233   229 H0L2PADXX      1 hour0         SC control well: FALSE
+## SRR1032914 HWI-ST1233   229 H0L2PADXX      1 hour0         SC control well: FALSE
+## SRR1032915 HWI-ST1233   229 H0L2PADXX      1 hour0         SC control well: FALSE
+##                   debris         numcells sampleName
+## SRR1032910 debris: FALSE cells in well: 1  T0_CT_A01
+## SRR1032911 debris: FALSE cells in well: 1  T0_CT_A02
+## SRR1032912 debris: FALSE cells in well: 1  T0_CT_A03
+## SRR1032913 debris: FALSE cells in well: 2  T0_CT_A04
+## SRR1032914 debris: FALSE cells in well: 1  T0_CT_A05
+## SRR1032915 debris: FALSE cells in well: 1  T0_CT_A06
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+The data consists of bulk and single-cell RNA-Seq (SC) at four time points. 
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{table}\hlstd{(pd}\hlopt{$}\hlstd{sampleType, pd}\hlopt{$}\hlstd{hour)}
+\end{alltt}
+\begin{verbatim}
+##       
+##        hour72 hour0 Hour24 Hour48
+##   SC       84    96     96     96
+##   bulk      3     3      3      3
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+
+\section{References}
+
+\begin{enumerate}
+
+\item Trapnell et al. (2014). The dynamics and regulators
+of cell fate decisions are revealed by pseudotemporal ordering of single cells
+\textit{Nature Biotechnology} \textbf{32} (4): 381 - 386.
+\href{http://www.ncbi.nlm.nih.gov/pubmed/24658644}{PMID: 24658644}. PMCID: PMC4122333.
+
+\end{enumerate}
+
+\end{document}
